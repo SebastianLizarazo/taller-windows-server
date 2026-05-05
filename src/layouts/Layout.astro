@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>{title} - Taller Windows Server 2012 R2</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon">⚙️</span>
+        <span class="logo-text">Taller Windows Server</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="/dns">DNS</a>
+        <a href="/dhcp">DHCP</a>
+        <a href="/ftp">FTP</a>
+        <a href="/smtp">SMTP</a>
+        <a href="/acercade" class="btn-nav">Acerca de</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="footer-icon">⚙️</span>
+        <span>Taller Windows Server 2012 R2</span>
+      </div>
+      <p class="footer-subtitle">Instalación y Configuración de Servicios de Red</p>
+      <p class="footer-copy">Proyecto académico</p>
+    </div>
+  </footer>
+</body>
+</html>

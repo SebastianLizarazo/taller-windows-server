@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="SMTP">
+  <h1>Configuración del Servidor SMTP</h1>
+
+  <p class="intro">
+    El servidor SMTP (Simple Mail Transfer Protocol) permite el envío y recepción
+    de correos electrónicos dentro del dominio local <code>lizarazo.com.co</code>.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar Servidor SMTP</h3>
+    <ol>
+      <li>Abrir <strong>Administrador del servidor</strong></li>
+      <li>Seleccionar <strong>Agregar roles y características</strong></li>
+      <li>En <strong>Características</strong>, buscar y marcar <strong>Servidor SMTP</strong></li>
+      <li>Completar la instalación</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Configurar Dominio de Correo</h3>
+    <ol>
+      <li>Abrir <strong>Herramientas → Administración de IIS 6.0</strong></li>
+      <li>Click derecho en <strong>Dominios</strong> → <strong>Nuevo → Dominio</strong></li>
+      <li>Tipo: <strong>Alias de dominio local</strong></li>
+      <li>Nombre: <code>lizarazo.com.co</code></li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Configurar Retransmisión</h3>
+    <p>Para permitir que el servidor acepte conexiones de la red local:</p>
+    <ol>
+      <li>Click derecho en <strong>SMTP Virtual Server</strong> → <strong>Propiedades</strong></li>
+      <li>Pestaña <strong>Acceso</strong> → <strong>Restricción de retransmisión</strong></li>
+      <li>Seleccionar <strong>Permitir que todos los equipos se autentiquen</strong></li>
+    </ol>
+  </div>
+
+  <h2>Creación de Estructura de Buzones</h2>
+
+  <p>El correo se almacena en la carpeta <code>C:\inetpub\mailroot\mailbox</code>:</p>
+
+  <pre>New-Item -Path "C:\inetpub\mailroot\mailbox\lizarazo.com.co\sebastian" -ItemType Directory
+New-Item -Path "C:\inetpub\mailroot\mailbox\lizarazo.com.co\david" -ItemType Directory</pre>
+
+  <h2>Envío de Correo mediante Telnet</h2>
+
+  <p>Para probar el servidor SMTP desde el cliente Linux:</p>
+
+  <pre>telnet 192.168.3.1 25</pre>
+
+  <p>Secuencia de comandos SMTP:</p>
+
+  <pre>
+HELO lizarazo.com.co
+250 Hello [192.168.3.100]
+MAIL FROM:sebastian@lizarazo.com.co
+250 2.1.0 sebastian@lizarazo.com.co....Sender OK
+RCPT TO:david@lizarazo.com.co
+250 2.1.5 david@lizarazo.com.co
+DATA
+354 Start mail input; end with CRLF.CRLF
+Subject: Prueba de correo
+
+Hola David, este es un correo de prueba.
+.
+250 2.6.0 Queued mail for delivery
+QUIT
+221 2.0.0 Service closing transmission channel
+  </pre>
+
+  <h2>Usuarios Configurados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Usuario 1</td>
+      <td>sebastian@lizarazo.com.co</td>
+    </tr>
+    <tr>
+      <td>Usuario 2</td>
+      <td>david@lizarazo.com.co</td>
+    </tr>
+  </table>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>TCP</td>
+    </tr>
+    <tr>
+      <td>Puerto</td>
+      <td>25 (SMTP)</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/ftp" class="btn">← Anterior: FTP</a>
+    <a href="/acercade" class="btn btn-primary">Siguiente: Acerca de →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

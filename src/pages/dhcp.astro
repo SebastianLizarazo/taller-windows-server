@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="DHCP">
+  <h1>Configuración del Servidor DHCP</h1>
+
+  <p class="intro">
+    El servidor DHCP (Dynamic Host Configuration Protocol) asigna automáticamente
+    direcciones IP a los clientes de la red.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar el Rol DHCP</h3>
+    <ol>
+      <li>Abrir <strong>Administrador del servidor</strong></li>
+      <li>Seleccionar <strong>Agregar roles y características</strong></li>
+      <li>Buscar y marcar <strong>Servidor DHCP</strong></li>
+      <li>Completar la instalación</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Configurar el Ámbito DHCP</h3>
+    <p>Crear un nuevo ámbito con los siguientes parámetros:</p>
+    <ul>
+      <li><strong>Nombre:</strong> RedLocal</li>
+      <li><strong>Rango de IP inicial:</strong> 192.168.3.100</li>
+      <li><strong>Rango de IP final:</strong> 192.168.3.254</li>
+      <li><strong>Máscara de subred:</strong> 255.255.255.0</li>
+      <li><strong>Puerta de enlace:</strong> 192.168.3.1</li>
+    </ul>
+  </div>
+
+  <h2>Arquitectura de Red</h2>
+
+  <pre>
+┌─────────────────────────────────────┐
+│   Servidor Windows Server 2012 R2   │
+│   IP Estática: 192.168.3.1          │
+│   Rol DHCP Activo                   │
+└───────────────┬─────────────────────┘
+                │
+    ┌───────────┴───────────┐
+    │   Distribuye IPs       │
+    │   192.168.3.100-254    │
+    └───────────┬───────────┘
+                │
+    ┌───────────┴───────────┐
+    │   VM Debian (Cliente) │
+    │   Recibe IP por DHCP  │
+    └───────────────────────┘
+  </pre>
+
+  <h2>Configuración del Cliente Linux</h2>
+
+  <p>En la máquina virtual Debian, editar el archivo de configuración de red:</p>
+
+  <pre>sudo nano /etc/network/interfaces</pre>
+
+  <p>Agregar las siguientes líneas:</p>
+
+  <pre>auto enp0s3
+iface enp0s3 inet dhcp</pre>
+
+  <p>Reiniciar el servicio de red:</p>
+
+  <pre>sudo systemctl restart networking</pre>
+
+  <h2>Verificación</h2>
+
+  <p>Para verificar que el cliente recibió IP del DHCP:</p>
+
+  <pre>ip a</pre>
+
+  <p>El resultado debería mostrar una IP en el rango 192.168.3.100-254:</p>
+
+  <pre>inet 192.168.3.100/24 brd 192.168.3.255 scope global dynamic enp0s3</pre>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>UDP</td>
+    </tr>
+    <tr>
+      <td>Puerto</td>
+      <td>67 (servidor) / 68 (cliente)</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/dns" class="btn">← Anterior: DNS</a>
+    <a href="/ftp" class="btn btn-primary">Siguiente: FTP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

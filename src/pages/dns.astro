@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="DNS">
+  <h1>Configuración del Servidor DNS</h1>
+
+  <p class="intro">
+    El Servidor DNS (Domain Name System) traduce nombres de dominio a direcciones IP.
+    En nuestro caso, configuramos el dominio interno <code>lizarazo.com.co</code>.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar el Rol DNS</h3>
+    <ol>
+      <li>Abrir <strong>Administrador del servidor</strong></li>
+      <li>Seleccionar <strong>Agregar roles y características</strong></li>
+      <li>Elegir <strong>Instalación basada en roles o características</strong></li>
+      <li>Seleccionar el servidor y marcar <strong>Servidor DNS</strong></li>
+      <li>Completar la instalación</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Crear Zona de Búsqueda Directa</h3>
+    <ol>
+      <li>Abrir <strong>Herramientas → DNS</strong></li>
+      <li>Click derecho en <strong>Zonas de búsqueda directa</strong></li>
+      <li>Seleccionar <strong>Zona nueva</strong></li>
+      <li>Elegir <strong>Zona principal</strong></li>
+      <li>Nombre de zona: <code>lizarazo.com.co</code></li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Crear Registros A</h3>
+    <p>Crear registros de tipo A para apuntar los subdominios a la IP del servidor:</p>
+    <ul>
+      <li><strong>www.lizarazo.com.co</strong> → 192.168.3.1</li>
+      <li><strong>SERVIDOR-NS.lizarazo.com.co</strong> → 192.168.3.1</li>
+    </ul>
+  </div>
+
+  <h2>Comandos de Verificación</h2>
+
+  <pre>nslookup www.lizarazo.com.co</pre>
+
+  <p>Desde el cliente Linux (Debian), ejecutamos el comando para verificar que el DNS resuelve correctamente:</p>
+
+  <pre>
+Server:     192.168.3.1
+Address:    192.168.3.1#53
+
+Name:       www.lizarazo.com.co
+Address:    192.168.3.1
+  </pre>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>UDP</td>
+    </tr>
+    <tr>
+      <td>Puerto</td>
+      <td>53</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/" class="btn">← Volver a Inicio</a>
+    <a href="/dhcp" class="btn btn-primary">Siguiente: DHCP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

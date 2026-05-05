@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="FTP">
+  <h1>Configuración del Servidor FTP</h1>
+
+  <p class="intro">
+    El protocolo FTP (File Transfer Protocol) permite la transferencia de archivos
+    entre el servidor y los clientes con autenticación de usuarios.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar Servidor FTP</h3>
+    <ol>
+      <li>Abrir <strong>Administrador del servidor</strong></li>
+      <li>Seleccionar <strong>Agregar roles y características</strong></li>
+      <li>Expandir <strong>Servidor web (IIS)</strong></li>
+      <li>Marcar <strong>Servidor FTP</strong></li>
+      <li>Completar la instalación</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Configurar Firewall</h3>
+    <p>Abrir los puertos necesarios en el Firewall de Windows:</p>
+    <pre>netsh advfirewall firewall add rule name="FTP for IIS" dir=in action=allow program="%SystemRoot%\system32\inetsrv\ftpsvc.exe" enable=yes
+netsh advfirewall set global StatefulFtp enable</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Crear Sitio FTP en IIS</h3>
+    <ol>
+      <li>Abrir <strong>Administrador de IIS</strong></li>
+      <li>Click derecho en <strong>Sitios</strong> → <strong>Agregar sitio FTP</strong></li>
+      <li>Configurar:
+        <ul>
+          <li>Nombre del sitio: FTPTutorial</li>
+          <li>Ruta física: C:\inetpub\ftp</li>
+          <li>Puerto: 21</li>
+          <li>Sin SSL</li>
+        </ul>
+      </li>
+      <li>Habilitar <strong>Autenticación Básica</strong></li>
+      <li>Configurar reglas de autorización para todos los usuarios</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <h3>Paso 4: Configurar Modo Pasivo</h3>
+    <p>Para que el FTP funcione correctamente, configurar el rango de puertos pasivos:</p>
+    <ul>
+      <li>Rango de puertos: 5000-5100</li>
+      <li>Dirección IP de firewall: 192.168.3.1</li>
+    </ul>
+  </div>
+
+  <h2>Creación de Usuarios</h2>
+
+  <p>Crear usuarios locales en el servidor Windows para autenticación FTP:</p>
+
+  <pre>net user sebastian Server2024@ /add
+net user david Server2024@ /add</pre>
+
+  <h2>Conexión desde Cliente Linux</h2>
+
+  <p>Desde la terminal de Debian:</p>
+
+  <pre>ftp 192.168.3.1
+Connected to 192.168.3.1.
+220 Microsoft FTP Service
+Name (192.168.3.1:debian13): sebastian
+331 Password required
+Password:
+230 User logged in.
+ftp></pre>
+
+  <h2>Comandos FTP Útiles</h2>
+
+  <table class="info-table">
+    <tr>
+      <td><code>DIR</code></td>
+      <td>Listar archivos</td>
+    </tr>
+    <tr>
+      <td><code>GET archivo.txt</code></td>
+      <td>Descargar archivo</td>
+    </tr>
+    <tr>
+      <td><code>PUT archivo.txt</code></td>
+      <td>Subir archivo</td>
+    </tr>
+    <tr>
+      <td><code>QUIT</code></td>
+      <td>Salir</td>
+    </tr>
+  </table>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Puerto de control</td>
+      <td>TCP 21</td>
+    </tr>
+    <tr>
+      <td>Puerto de datos (pasivo)</td>
+      <td>TCP 5000-5100</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/dhcp" class="btn">← Anterior: DHCP</a>
+    <a href="/smtp" class="btn btn-primary">Siguiente: SMTP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>
