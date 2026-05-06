@@ -36,23 +36,11 @@ import Layout from '../layouts/Layout.astro';
 
   <h2>Arquitectura de Red</h2>
 
-  <pre>
-┌─────────────────────────────────────┐
-│   Servidor Windows Server 2012 R2   │
-│   IP Estática: 192.168.3.1          │
-│   Rol DHCP Activo                   │
-└───────────────┬─────────────────────┘
-                │
-    ┌───────────┴───────────┐
-    │   Distribuye IPs       │
-    │   192.168.3.100-254    │
-    └───────────┬───────────┘
-                │
-    ┌───────────┴───────────┐
-    │   VM Debian (Cliente) │
-    │   Recibe IP por DHCP  │
-    └───────────────────────┘
-  </pre>
+ <img
+    src="/images/diagrama-red-dhcp.png"
+    alt="Arquitectura de la red"
+    class="diagram-image"
+  />
 
   <h2>Configuración del Cliente Linux</h2>
 
@@ -102,5 +90,15 @@ iface enp0s3 inet dhcp</pre>
   .intro {
     color: var(--text-secondary);
     margin-bottom: 2rem;
+  }
+
+  .diagram-image {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
   }
 </style>
