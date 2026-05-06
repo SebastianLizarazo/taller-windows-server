@@ -10,7 +10,7 @@ import Layout from '../layouts/Layout.astro';
  *    public/images/NOMBRE_SECCION/
  *    Ejemplo: public/images/dns/pantallazo1.png
  *
- * 2. Agregá cada imagen en la sección corresponding:
+ * 2. Agregá cada imagen en la sección correspondiente:
  *    { image: "/images/dns/pantallazo1.png", caption: "Descripción de lo que muestra" }
  *
  * 3. Repetí para cada imagen de la sección
@@ -154,15 +154,17 @@ const sections = [
         <div class="section-content">
           <div class="images-grid">
             {section.items.map((item, index) => (
-              <div class="image-card">
-                <div class="image-wrapper">
-                  <img 
-                    src={item.image} 
-                    alt={item.caption || `${section.title} - Imagen ${index + 1}`}
-                    onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📷<span>Imagen no encontrada</span></div>'"
-                  />
-                </div>
-                <p class="image-caption">{item.caption || `${section.title} - Imagen ${index + 1}`}</p>
+              <div class="image-card" data-section={section.id} data-index={index}>
+                <button class="image-button" type="button" data-caption={item.caption}>
+                  <div class="image-wrapper">
+                    <img 
+                      src={item.image} 
+                      alt={item.caption || `${section.title} - Imagen ${index + 1}`}
+                      onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📷<span>Imagen no encontrada</span></div>'"
+                    />
+                  </div>
+                  <p class="image-caption">{item.caption || `${section.title} - Imagen ${index + 1}`}</p>
+                </button>
               </div>
             ))}
           </div>
@@ -180,6 +182,20 @@ const sections = [
     <a href="/dns" class="btn">Siguiente: DNS →</a>
   </div>
 </Layout>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox">
+  <button class="lightbox-close" type="button">✕</button>
+  <button class="lightbox-nav lightbox-prev" type="button">‹</button>
+  <button class="lightbox-nav lightbox-next" type="button">›</button>
+  <div class="lightbox-content">
+    <img id="lightbox-image" src="" alt="" />
+    <p id="lightbox-caption"></p>
+  </div>
+  <div class="lightbox-counter">
+    <span id="lightbox-current">1</span> / <span id="lightbox-total">1</span>
+  </div>
+</div>
 
 <style>
   .intro {
@@ -275,6 +291,16 @@ const sections = [
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
 
+  .image-button {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+    text-align: left;
+    display: block;
+  }
+
   .image-wrapper {
     aspect-ratio: 16 / 9;
     background: var(--bg-card);
@@ -286,6 +312,11 @@ const sections = [
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .image-card:hover .image-wrapper img {
+    transform: scale(1.05);
   }
 
   .image-placeholder {
@@ -322,6 +353,113 @@ const sections = [
     border-radius: 8px;
   }
 
+  /* ================================================
+     LIGHTBOX STYLES
+     ================================================ */
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-close:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-nav:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .lightbox-prev {
+    left: 1.5rem;
+  }
+
+  .lightbox-next {
+    right: 1.5rem;
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #lightbox-image {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+  }
+
+  #lightbox-caption {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
   @media (max-width: 768px) {
     .images-grid {
       grid-template-columns: 1fr;
@@ -336,10 +474,133 @@ const sections = [
       order: 3;
       margin-top: 0.5rem;
     }
+
+    .lightbox-nav {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+
+    .lightbox-prev {
+      left: 0.5rem;
+    }
+
+    .lightbox-next {
+      right: 0.5rem;
+    }
+
+    .lightbox-close {
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+    }
   }
 </style>
 
 <script>
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCurrent = document.getElementById('lightbox-current');
+  const lightboxTotal = document.getElementById('lightbox-total');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+  let currentImages: { image: string; caption: string }[] = [];
+
+  // Collect all images from all sections
+  const allImages: { section: string; index: number; image: string; caption: string }[] = [];
+  
+  document.querySelectorAll('.gallery-section').forEach(section => {
+    const sectionId = section.id;
+    section.querySelectorAll('.image-card').forEach(card => {
+      const img = card.querySelector('img');
+      const caption = card.querySelector('.image-caption');
+      if (img && caption) {
+        allImages.push({
+          section: sectionId,
+          index: parseInt(card.getAttribute('data-index') || '0'),
+          image: img.src,
+          caption: caption.textContent || ''
+        });
+      }
+    });
+  });
+
+  // Open lightbox
+  document.querySelectorAll('.image-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLElement;
+      const card = target.closest('.image-card') as HTMLElement;
+      const sectionId = card.getAttribute('data-section') || '';
+      const index = parseInt(card.getAttribute('data-index') || '0');
+      
+      // Get all images for this section
+      const section = document.getElementById(sectionId);
+      const items = section?.querySelectorAll('.image-card') || [];
+      
+      currentImages = Array.from(items).map(item => {
+        const img = item.querySelector('img');
+        const caption = item.querySelector('.image-caption');
+        return {
+          image: img?.src || '',
+          caption: caption?.textContent || ''
+        };
+      });
+      
+      currentIndex = index;
+      showImage();
+      lightbox?.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close lightbox
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Navigation
+  prevBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    showImage();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    showImage();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') (prevBtn as HTMLElement)?.click();
+    if (e.key === 'ArrowRight') (nextBtn as HTMLElement)?.click();
+  });
+
+  function showImage() {
+    if (!lightboxImage || !lightboxCaption || !lightboxCurrent || !lightboxTotal) return;
+    
+    const item = currentImages[currentIndex];
+    lightboxImage.src = item.image;
+    lightboxImage.alt = item.caption;
+    lightboxCaption.textContent = item.caption;
+    lightboxCurrent.textContent = (currentIndex + 1).toString();
+    lightboxTotal.textContent = currentImages.length.toString();
+  }
+
+  function closeLightbox() {
+    lightbox?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Section toggle accordion
   document.querySelectorAll('.section-toggle').forEach(button => {
     button.addEventListener('click', () => {
       button.classList.toggle('active');
