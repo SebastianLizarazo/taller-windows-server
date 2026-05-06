@@ -1,0 +1,352 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+/*
+ * ================================================
+ * INSTRUCCIONES PARA AGREGAR IMÁGENES
+ * ================================================
+ *
+ * 1. Guardá tus capturas en:
+ *    public/images/NOMBRE_SECCION/
+ *    Ejemplo: public/images/dns/pantallazo1.png
+ *
+ * 2. Agregá cada imagen en la sección corresponding:
+ *    { image: "/images/dns/pantallazo1.png", caption: "Descripción de lo que muestra" }
+ *
+ * 3. Repetí para cada imagen de la sección
+ *
+ * ================================================
+ */
+
+const sections = [
+  {
+    id: "red-interna",
+    title: "Configuración de Red Interna",
+    icon: "🌐",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DE RED INTERNA AQUÍ
+      // Ejemplo:
+      // { image: "/images/red-interna/img1.jpg", caption: "Descripción de la imagen" }
+      // =========================================
+      {image: "/images/red-interna/ConfiguracionRedInternaWindowsServer.png", caption: "Configuración de la red interna en Windows Server 2012 R2" },
+      {image: "/images/red-interna/ConfiguracionRedInternaClienteDebian.png", caption: "Configuración de la red interna en Cliente Debian" },
+      {image: "/images/red-interna/InterfazRedClienteDebian.png", caption: "Verificación de la interfaz de red en Cliente Debian" },
+    ]
+  },
+  {
+    id: "servidor-inicial",
+    title: "Configuración Inicial del Servidor",
+    icon: "🖥️",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DEL SERVIDOR AQUÍ
+      // =========================================
+      {image: "/images/servidor-inicial/ConfiguracionServidor-SeleccionServidor.png", caption: "Selección del servidor en la configuración inicial" },
+      {image: "/images/servidor-inicial/ConfiguracionServidor-SeleccionDeRoles.png", caption: "Selección de los roles que tendrá el servidor" },
+      {image: "/images/servidor-inicial/ConfiguracionServidor-ConfirmacionInstalacion.png", caption: "Confirmación de la instalación del servidor" }
+    ]
+  },
+  {
+    id: "dhcp",
+    title: "Configuración DHCP",
+    icon: "📡",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DE DHCP AQUÍ
+      // Ejemplo:
+      // { image: "/images/dhcp/paso1-instalar-rol.png", caption: "Instalación del rol DHCP" }
+      // { image: "/images/dhcp/paso2-crear-ambito.png", caption: "Creación del ámbito con rango 192.168.3.100-254" }
+      // =========================================
+      {image: "/images/dhcp/ConfiguracionDHCPServidor-ConfiguracionIP.png", caption: "Creación del rango de IPs para el servidor DHCP" },
+      {image: "/images/dhcp/ConfiguracionDHCPServidor-ServidorComoRouterParaLaRed.png", caption: "Establecimiento del servidor como router para la red" },
+      {image: "/images/dhcp/ConfiguracionDHCPServidor-ConfiguracionDNS.png", caption: "Configuración del servidor DNS" },
+      {image: "/images/dhcp/ConfiguracionDHCPServidor-ConfirmacionCreacionAmbito.png", caption: "Confirmación de la creación del ámbito" },
+      {image: "/images/dhcp/EstableciendoIP-EstaticaAlServidor.png", caption: "Establecimiento de IP estática en el servidor" },
+      {image: "/images/dhcp/VerificacionClienteDebianRecibeIP-PorDHCP.png", caption: "Verificación de que el cliente recibe IP por DHCP" },
+    ]
+  },
+  {
+    id: "dns",
+    title: "Configuración DNS",
+    icon: "🔗",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DE DNS AQUÍ
+      // =========================================
+      {image: "/images/dns/ConfiguracionZonaDNS-NombreDeZona.png", caption: "Configuración del nombre de la zona DNS" },
+      {image: "/images/dns/ConfiguracionZonaDNS.png", caption: "Confirmacion de creacion de la zona DNS" },
+      {image: "/images/dns/ConfiguracionZonaDNS-CreacionHost-www.png", caption: "Configuración del host www en la zona DNS" },
+      {image: "/images/dns/ConfiguracionZonaDNS-CreacionHost-SERVIDOR-NS.png", caption: "Configuración del host SERVIDOR-NS en la zona DNS" },
+      {image: "/images/dns/VerificacionDNS-DesdeDebian.png", caption: "Verificación de la configuración DNS desde el cliente Debian" },
+    ]
+  },
+  {
+    id: "iis",
+    title: "Configuración IIS",
+    icon: "🌍",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DE IIS AQUÍ
+      // =========================================
+      {image: "/images/iis/ConfiguracionServidorWeb-ParaPaginaTutorialEsteDisponible.png", caption: "Configuración del servidor web para que la página del tutorial esté disponible" },
+      {image: "/images/iis/VerificacionSitio-IIS-Accesible.png", caption: "Verificación de que el sitio es accesible a través del servidor IIS" },
+    ]
+  },
+  {
+    id: "ftp",
+    title: "Configuración FTP",
+    icon: "📁",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DE FTP AQUÍ
+      // =========================================
+      {image: "/images/ftp/Servidor-VerificacionInstalacionFTP.png", caption: "Confirmación del rol FTP" },
+      {image: "/images/ftp/CreacionSitioFTP.png", caption: "Creación del sitio FTP parte 1" },
+      {image: "/images/ftp/CreacionSitioFTP-2.png", caption: "Creación del sitio FTP parte 2" },
+      {image: "/images/ftp/CreacionSitioFTP-3.png", caption: "Creación del sitio FTP parte 3" },
+      {image: "/images/ftp/CreacionPrimerUsuarioServidor-sebastian.png", caption: "Creación del primer usuario del servidor FTP (sebastian)" },
+      {image: "/images/ftp/CreacionSegundoUsuarioServidor-david.png", caption: "Creación del segundo usuario del servidor FTP (david)" },
+      {image: "/images/ftp/AsignacionPermisosFTP-a-sebastian-david.png", caption: "Asignación de permisos FTP a los usuarios (sebastian y david)" },
+      {image: "/images/ftp/VerificacionFTP-DesdeDebianUsuario-sebastian.png", caption: "Verificación de la configuración FTP desde el cliente Debian (sebastian)" },
+    ]
+  },
+  {
+    id: "smtp",
+    title: "Configuración SMTP",
+    icon: "✉️",
+    items: [
+      // =========================================
+      // AGREGAR IMÁGENES DE SMTP AQUÍ
+      // =========================================
+      {image: "/images/smtp/AgregarCaracterista-ServidorSMTP.png", caption: "Agregar característica de servidor SMTP" },
+      {image: "/images/smtp/IniciacionServicioSMTP-EnServidor.png", caption: "Iniciación del servicio SMTP en el servidor" },
+      {image: "/images/smtp/ConfiguracionDominioLoca-SMTP.png", caption: "Configuración del dominio local para SMTP" },
+      {image: "/images/smtp/CreacionBuzones-sebastian-david-SMTP.png", caption: "Creación de buzones de correo para los usuarios (sebastian y david)" },
+      {image: "/images/smtp/AsignacionPermisosBuzonesSMTP.png", caption: "Asignación de permisos a los buzones de correo (sebastian y david)" },
+      {image: "/images/smtp/VerificamosEstructuraCarpetaParaElDominioLocal-SMTP.png", caption: "Verificación de la estructura de la carpeta para el dominio local (SMTP)" },
+      {image: "/images/smtp/PruebaEnvioCorreo-sebastian-to-david.png", caption: "Prueba de envío de correo (sebastian a david)" },
+      {image: "/images/smtp/RevisionDeQueElCorreoSeEnvioACarpetaDrop.png", caption: "Verificación de que el correo se envió a la carpeta DROP" },
+    ]
+  }
+];
+---
+
+<Layout title="Galería de Evidencias">
+  <h1>Galería de Evidencias</h1>
+
+  <p class="intro">
+    Documentación visual del proceso de instalación y configuración del servidor
+    Windows Server 2012 R2. Cada sección contiene las capturas de pantalla
+    correspondientes a cada etapa del taller.
+  </p>
+
+  <div class="gallery-sections">
+    {sections.map((section) => (
+      <div class="gallery-section" id={section.id}>
+        <button class="section-toggle" type="button">
+          <span class="section-icon">{section.icon}</span>
+          <span class="section-title">{section.title}</span>
+          <span class="section-count">{section.items.length} imágenes</span>
+          <span class="toggle-arrow">▼</span>
+        </button>
+
+        <div class="section-content">
+          <div class="images-grid">
+            {section.items.map((item, index) => (
+              <div class="image-card">
+                <div class="image-wrapper">
+                  <img 
+                    src={item.image} 
+                    alt={item.caption || `${section.title} - Imagen ${index + 1}`}
+                    onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📷<span>Imagen no encontrada</span></div>'"
+                  />
+                </div>
+                <p class="image-caption">{item.caption || `${section.title} - Imagen ${index + 1}`}</p>
+              </div>
+            ))}
+          </div>
+
+          {section.items.length === 0 && (
+            <p class="empty-message">📷 No hay imágenes disponibles para esta sección aún.</p>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="nav-buttons">
+    <a href="/" class="btn">← Volver a Inicio</a>
+    <a href="/dns" class="btn">Siguiente: DNS →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+
+  .gallery-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .gallery-section {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+
+  .section-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: left;
+  }
+
+  .section-toggle:hover {
+    background: rgba(108, 92, 231, 0.1);
+  }
+
+  .section-icon {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    flex: 1;
+  }
+
+  .section-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .toggle-arrow {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+  }
+
+  .section-toggle.active .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  .section-content {
+    display: none;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .section-content.open {
+    display: block;
+  }
+
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .image-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .image-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .image-wrapper {
+    aspect-ratio: 16 / 9;
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 2rem;
+  }
+
+  .image-placeholder span {
+    font-size: 0.85rem;
+  }
+
+  .image-caption {
+    padding: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    line-height: 1.5;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .images-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-toggle {
+      flex-wrap: wrap;
+    }
+
+    .section-count {
+      width: 100%;
+      order: 3;
+      margin-top: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.section-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      button.classList.toggle('active');
+      const content = button.nextElementSibling;
+      if (content) {
+        content.classList.toggle('open');
+      }
+    });
+  });
+</script>
