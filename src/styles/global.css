@@ -4,17 +4,17 @@
 
 :root {
   /* Color Palette - Dark Elegant Theme */
-  --bg-primary: #0f0f1a;
-  --bg-secondary: #1a1a2e;
+  --bg-primary: #F2F2F2;
+  --bg-secondary: #1e1e69;
   --bg-card: #16213e;
-  --bg-card-hover: #1f2b4a;
+  --bg-card-hover: #004cff;
   
-  --accent-primary: #6c5ce7;
-  --accent-secondary: #a29bfe;
-  --accent-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  --accent-primary: #b8d941;
+  --accent-secondary: #547fb7;
+  --accent-gradient: linear-gradient(135deg, #b8d941 0%, #a8bf56 100%);
   
   --text-primary: #f8f9fa;
-  --text-secondary: #b2bec3;
+  --text-secondary: #f2f2f2;
   --text-muted: #636e72;
   
   --border-color: rgba(108, 92, 231, 0.2);

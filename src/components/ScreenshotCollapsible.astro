@@ -1,0 +1,118 @@
+---
+interface Props {
+  title: string;
+  images: string[];
+  alt?: string;
+}
+
+const { title, images, alt = "Captura de pantalla" } = Astro.props;
+---
+
+<div class="screenshot-collapsible">
+  <button class="collapsible-toggle" type="button">
+    <span class="toggle-icon">📷</span>
+    <span>{title}</span>
+    <span class="toggle-arrow">▼</span>
+  </button>
+
+  <div class="collapsible-content">
+    <div class="screenshots-grid">
+      {images.map((src, index) => (
+        <div class="screenshot-item">
+          <img src={src} alt={`${alt} ${index + 1}`} />
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .screenshot-collapsible {
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .collapsible-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-card);
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: left;
+  }
+
+  .collapsible-toggle:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .toggle-icon {
+    font-size: 1.2rem;
+  }
+
+  .toggle-arrow {
+    margin-left: auto;
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+  }
+
+  .collapsible-toggle.active .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  .collapsible-content {
+    display: none;
+    padding: 1.25rem;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .collapsible-content.open {
+    display: block;
+  }
+
+  .screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .screenshot-item {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .screenshot-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .screenshot-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.collapsible-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      button.classList.toggle('active');
+      const content = button.nextElementSibling;
+      if (content) {
+        content.classList.toggle('open');
+      }
+    });
+  });
+</script>
