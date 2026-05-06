@@ -1,29 +1,32 @@
 /* ========================================
    TALLER WINDOWS SERVER - DISEÑO ELEGANTE
+   Paleta: Teal Profesional
    ======================================== */
 
 :root {
-  /* Color Palette - Dark Elegant Theme */
-  --bg-primary: #F2F2F2;
-  --bg-secondary: #1e1e69;
-  --bg-card: #16213e;
-  --bg-card-hover: #004cff;
-  
-  --accent-primary: #b8d941;
-  --accent-secondary: #547fb7;
-  --accent-gradient: linear-gradient(135deg, #b8d941 0%, #a8bf56 100%);
-  
-  --text-primary: #f8f9fa;
-  --text-secondary: #f2f2f2;
-  --text-muted: #636e72;
-  
-  --border-color: rgba(108, 92, 231, 0.2);
-  --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  
+  /* Color Palette - Teal Professional Theme */
+  --bg-primary: #03363D;
+  --bg-secondary: #0D4D54;
+  --bg-card: #174D4D;
+  --bg-card-hover: #1D5D5D;
+  --bg-input: #F8F9F9;
+
+  --accent-primary: #00A896;
+  --accent-secondary: #02C39A;
+  --accent-gradient: linear-gradient(135deg, #00A896 0%, #02C39A 100%);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #F8F9F9;
+  --text-muted: #B8C5C6;
+  --text-dark: #03363D;
+
+  --border-color: rgba(0, 168, 150, 0.2);
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
   /* Typography */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'Fira Code', 'Consolas', monospace;
-  
+
   /* Spacing */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -109,7 +112,7 @@ code {
    ======================================== */
 
 nav {
-  background: rgba(15, 15, 26, 0.95);
+  background: rgba(3, 54, 61, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
@@ -189,7 +192,8 @@ nav {
   background: var(--accent-gradient);
   padding: 0.5rem 1.25rem !important;
   border-radius: 25px;
-  color: white !important;
+  color: var(--text-dark) !important;
+  font-weight: 600;
 }
 
 .btn-nav::after {
@@ -198,7 +202,7 @@ nav {
 
 .btn-nav:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 168, 150, 0.4);
 }
 
 /* ========================================
@@ -275,7 +279,7 @@ pre {
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: 0.9rem;
-  color: #e17055;
+  color: #7FDBDA;
   line-height: 1.8;
 }
 
@@ -315,19 +319,25 @@ li {
 
 .btn:hover {
   background: var(--accent-gradient);
+  color: var(--text-dark);
   border-color: transparent;
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(108, 92, 231, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 168, 150, 0.3);
 }
 
 .btn-primary {
   background: var(--accent-gradient);
+  color: var(--text-dark);
   border-color: transparent;
+}
+
+.btn-primary:hover {
+  background: var(--accent-secondary);
 }
 
 /* Note / Callout */
 .note {
-  background: rgba(108, 92, 231, 0.1);
+  background: rgba(0, 168, 150, 0.1);
   border-left: 3px solid var(--accent-primary);
   padding: var(--space-md);
   border-radius: 0 8px 8px 0;
@@ -442,29 +452,29 @@ footer {
   h1 {
     font-size: 2rem;
   }
-  
+
   main {
     margin: var(--space-md);
     padding: var(--space-lg);
     border-radius: 12px;
   }
-  
+
   .nav-container {
     flex-direction: column;
     gap: var(--space-sm);
   }
-  
+
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-sm);
   }
-  
+
   .nav-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .btn {
     width: 100%;
     justify-content: center;
