@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="DNS - Linux Server" track="linux">
+  <h1>Configuración del Servidor DNS (BIND9)</h1>
+
+  <p class="intro">
+    El Servidor DNS (Domain Name System) traduce nombres de dominio a direcciones IP.
+    En Linux, utilizaremos <strong>BIND9</strong> como servidor DNS. Configuraremos el dominio
+    <code>sebastianlizarazo.com.co</code>.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar BIND9</h3>
+    <pre>apt update && apt install bind9 bind9-doc</pre>
+    <p>El paquete <code>bind9-doc</code> incluye documentación de referencia.</p>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Configurar Zona DNS</h3>
+    <p>Editar el archivo <code>/etc/bind/named.conf.local</code>:</p>
+    <pre>zone "sebastianlizarazo.com.co" &#123;
+    type master;
+    file "/etc/bind/db.sebastianlizarazo.com.co";
+&#125;;</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Crear Archivo de Zona</h3>
+    <p>Crear el archivo de zona en <code>/etc/bind/db.sebastianlizarazo.com.co</code>:</p>
+    <pre>; Zona DNS para sebastianlizarazo.com.co
+&#36;TTL    604800
+&#64;       IN      SOA     ns.sebastianlizarazo.com.co. admin.sebastianlizarazo.com.co. (
+                     2026051701         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+; Nameservers
+&#64;       IN      NS      ns.sebastianlizarazo.com.co.
+
+; Hosts
+&#64;       IN      A       192.168.3.1
+ns      IN      A       192.168.3.1
+www     IN      A       192.168.3.1</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 4: Verificar Configuración</h3>
+    <pre>named-checkconf /etc/bind/named.conf.local
+named-checkzone sebastianlizarazo.com.co /etc/bind/db.sebastianlizarazo.com.co</pre>
+    <p>Ambos comandos deben ejecutarse sin errores.</p>
+  </div>
+
+  <div class="step">
+    <h3>Paso 5: Reiniciar el Servicio</h3>
+    <pre>systemctl restart bind9
+systemctl enable bind9</pre>
+  </div>
+
+  <h2>Verificación desde el Cliente</h2>
+
+  <p>Desde la máquina cliente Debian, verificar que el DNS resuelve correctamente:</p>
+
+  <pre>nslookup www.sebastianlizarazo.com.co 192.168.3.1</pre>
+
+  <p>Resultado esperado:</p>
+
+  <pre>Server:     192.168.3.1
+Address:    192.168.3.1#53
+
+Name:       www.sebastianlizarazo.com.co
+Address:    192.168.3.1</pre>
+
+  <h2>Comandos Útiles</h2>
+
+  <table class="info-table">
+    <tr>
+      <td><code>systemctl status bind9</code></td>
+      <td>Ver estado del servicio</td>
+    </tr>
+    <tr>
+      <td><code>journalctl -u bind9</code></td>
+      <td>Ver logs del servicio</td>
+    </tr>
+    <tr>
+      <td><code>named-checkconf</code></td>
+      <td>Verificar configuración</td>
+    </tr>
+    <tr>
+      <td><code>rndc reload</code></td>
+      <td>Recargar configuración sin reiniciar</td>
+    </tr>
+  </table>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>UDP/TCP</td>
+    </tr>
+    <tr>
+      <td>Puerto</td>
+      <td>53</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/linux" class="btn">← Inicio</a>
+    <a href="/linux/dhcp" class="btn btn-primary">Siguiente: DHCP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

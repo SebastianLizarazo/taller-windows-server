@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Galería - Linux Server" track="linux">
+  <h1>Galería de Evidencias - Linux Server</h1>
+
+  <p class="intro">
+    Esta galería muestra las capturas de pantalla del proceso de instalación y configuración
+    del servidor Linux (Debian 12) con los servicios de red.
+  </p>
+
+  <div class="gallery-note">
+    <p>📸 Las capturas de pantalla se irán agregando a medida que se realice el taller.</p>
+  </div>
+
+  <h2>Estructura de Secciones</h2>
+
+  <div class="gallery-sections">
+    <div class="section-card">
+      <h3>🌐 DNS (BIND9)</h3>
+      <p>Capturas de la instalación y configuración de BIND9</p>
+      <div class="preview-placeholder">Imágenes: public/images/linux/dns/</div>
+    </div>
+
+    <div class="section-card">
+      <h3>📡 DHCP (ISC)</h3>
+      <p>Capturas de la configuración del servidor DHCP</p>
+      <div class="preview-placeholder">Imágenes: public/images/linux/dhcp/</div>
+    </div>
+
+    <div class="section-card">
+      <h3>📁 FTP (vsftpd)</h3>
+      <p>Capturas de la configuración y prueba del FTP</p>
+      <div class="preview-placeholder">Imágenes: public/images/linux/ftp/</div>
+    </div>
+
+    <div class="section-card">
+      <h3>✉️ SMTP (Postfix)</h3>
+      <p>Capturas del servidor de correo y Thunderbird</p>
+      <div class="preview-placeholder">Imágenes: public/images/linux/smtp/</div>
+    </div>
+
+    <div class="section-card">
+      <h3>🌍 HTTP (Apache2)</h3>
+      <p>Capturas del servidor web Apache2</p>
+      <div class="preview-placeholder">Imágenes: public/images/linux/http/</div>
+    </div>
+
+    <div class="section-card">
+      <h3>🖥️ Infraestructura</h3>
+      <p>Capturas de la configuración de VirtualBox y VMs</p>
+      <div class="preview-placeholder">Imágenes: public/images/linux/galeria/</div>
+    </div>
+  </div>
+
+  <h2>Agregar Imágenes</h2>
+
+  <div class="step">
+    <h3>Instrucciones para agregar capturas</h3>
+    <ol>
+      <li>Guardar las capturas en formato PNG o JPG</li>
+      <li>Copiar las imágenes a la carpeta correspondiente:
+        <ul>
+          <li><code>public/images/linux/dns/</code></li>
+          <li><code>public/images/linux/dhcp/</code></li>
+          <li><code>public/images/linux/ftp/</code></li>
+          <li><code>public/images/linux/smtp/</code></li>
+          <li><code>public/images/linux/http/</code></li>
+          <li><code>public/images/linux/galeria/</code></li>
+        </ul>
+      </li>
+      <li>Nombrar las imágenes descriptivamente (ej: <code>01-instalacion-bind9.png</code>)</li>
+      <li>La galería se actualiza automáticamente</li>
+    </ol>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="/linux/http" class="btn">← Anterior: HTTP</a>
+    <a href="/linux/acercade" class="btn btn-primary">Siguiente: Acerca de →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .gallery-note {
+    background: rgba(0, 168, 150, 0.1);
+    border-left: 3px solid #00A896;
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 2rem;
+  }
+
+  .gallery-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .section-card h3 {
+    margin-top: 0;
+    color: var(--accent-secondary);
+  }
+
+  .section-card p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .preview-placeholder {
+    background: var(--bg-primary);
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+</style>

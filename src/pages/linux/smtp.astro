@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="SMTP - Linux Server" track="linux">
+  <h1>Configuración del Servidor SMTP (Postfix + Thunderbird)</h1>
+
+  <p class="intro">
+    El servidor SMTP (Simple Mail Transfer Protocol) permite el envío y recepción
+    de correos electrónicos. En Linux, utilizaremos <strong>Postfix</strong> como servidor SMTP
+    y <strong>Thunderbird</strong> como cliente de correo para la verificación.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar Postfix</h3>
+    <pre>apt update && apt install postfix mailutils</pre>
+    <p>Seleccionar "Sitio de Internet" cuando se solicite el tipo de configuración.</p>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Configurar Postfix</h3>
+    <p>Editar <code>/etc/postfix/main.cf</code>:</p>
+    <pre># Configuración de Postfix
+myhostname = mail.sebastianlizarazo.com.co
+mydomain = sebastianlizarazo.com.co
+myorigin = $mydomain
+mydestination = $myhostname, localhost, localhost.$mydomain, $mydomain
+mynetworks = 192.168.3.0/24, 127.0.0.0/8
+mailbox_size_limit = 0
+home_mailbox = Maildir/
+smtp_bind_address = 192.168.3.1</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Crear Directorios de Correo</h3>
+    <pre>mkdir -p /etc/skel/Maildir
+maildirmake /etc/skel/Maildir
+useradd -m -s /bin/bash sebastian
+useradd -m -s /bin/bash david
+passwd sebastian
+passwd david</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 4: Reiniciar el Servicio</h3>
+    <pre>systemctl restart postfix
+systemctl enable postfix</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 5: Configurar Thunderbird</h3>
+    <p>En el cliente Debian con Thunderbird instalado:</p>
+    <ol>
+      <li>Abrir Thunderbird</li>
+      <li>Configurar cuenta para <strong>sebastian@sebastianlizarazo.com.co</strong>:
+        <ul>
+          <li>Nombre: Sebastián</li>
+          <li>Correo: sebastian@sebastianlizarazo.com.co</li>
+          <li>Contraseña: (la configurada)</li>
+        </ul>
+      </li>
+      <li>Configuración del servidor:
+        <ul>
+          <li>Servidor entrante: IMAP 192.168.3.1 puerto 143</li>
+          <li>Servidor saliente: SMTP 192.168.3.1 puerto 25</li>
+        </ul>
+      </li>
+      <li>Repetir para <strong>david@sebastianlizarazo.com.co</strong></li>
+    </ol>
+  </div>
+
+  <h2>Envío de Correo de Prueba</h2>
+
+  <p>Desde Thunderbird (cuenta de sebastian):</p>
+  <ol>
+    <li>Click en "Escribir"</li>
+    <li>Para: david@sebastianlizarazo.com.co</li>
+    <li>Asunto: Prueba de correo</li>
+    <li>Cuerpo: Hola David, este es un correo de prueba desde el servidor Linux.</li>
+    <li>Click en "Enviar"</li>
+  </ol>
+
+  <h2>Verificación</h2>
+
+  <p>Verificar que el correo llegó a la bandeja de entrada de David:</p>
+  <pre>ls /home/david/Maildir/new/</pre>
+
+  <p>Contenido del mensaje:</p>
+  <pre>cat /home/david/Maildir/new/*</pre>
+
+  <h2>Comandos de Verificación</h2>
+
+  <table class="info-table">
+    <tr>
+      <td><code>systemctl status postfix</code></td>
+      <td>Ver estado del servicio</td>
+    </tr>
+    <tr>
+      <td><code>tail -f /var/log/mail.log</code></td>
+      <td>Ver logs en tiempo real</td>
+    </tr>
+    <tr>
+      <td><code>mail -s "Asunto" usuario@dominio</code></td>
+      <td>Enviar correo desde terminal</td>
+    </tr>
+  </table>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>TCP</td>
+    </tr>
+    <tr>
+      <td>Puerto SMTP</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>Puerto IMAP</td>
+      <td>143</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/linux/ftp" class="btn">← Anterior: FTP</a>
+    <a href="/linux/http" class="btn btn-primary">Siguiente: HTTP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

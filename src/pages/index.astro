@@ -1,39 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import TrackSelector from '../components/TrackSelector.astro';
 ---
 
 <Layout title="Inicio">
-  <h1>Taller Windows Server 2012 R2</h1>
+  <h1>Taller de Servidores</h1>
 
   <p class="intro">
-    Este tutorial documenta paso a paso la instalación y configuración de un servidor
-    <strong>Windows Server 2012 R2</strong> con servicios de red completos.
+    Este taller documenta la instalación y configuración de servidores de red,
+    con implementaciones tanto en <strong>Windows Server 2012 R2</strong> como en
+    <strong>Linux Server (Debian)</strong>.
   </p>
 
-  <h2>Servicios Implementados</h2>
+  <h2>Selecciona tu Taller</h2>
 
-  <div class="services-grid">
-    <div class="service-card">
-      <h3>🌐 DNS</h3>
-      <p>Servidor de nombres de dominio para la red local</p>
-    </div>
-    <div class="service-card">
-      <h3>📡 DHCP</h3>
-      <p>Asignación automática de direcciones IP</p>
-    </div>
-    <div class="service-card">
-      <h3>📁 FTP</h3>
-      <p>Protocolo de transferencia de archivos con autenticación</p>
-    </div>
-    <div class="service-card">
-      <h3>✉️ SMTP</h3>
-      <p>Servidor de correo electrónico local</p>
-    </div>
-    <div class="service-card">
-      <h3>🌍 HTTP (IIS)</h3>
-      <p>Servidor web Internet Information Services</p>
-    </div>
-  </div>
+  <TrackSelector />
 
   <h2>Arquitectura de la Solución</h2>
 
@@ -56,17 +37,13 @@ import Layout from '../layouts/Layout.astro';
     </tr>
     <tr>
       <td>Dominio DNS</td>
-      <td>lizarazo.com.co</td>
+      <td>sebastianlizarazo.com.co</td>
     </tr>
     <tr>
       <td>Usuarios FTP/SMTP</td>
       <td>sebastian, david</td>
     </tr>
   </table>
-
-  <div class="nav-buttons">
-    <a href="/dns" class="btn btn-primary">Comenzar con DNS →</a>
-  </div>
 </Layout>
 
 <style>

@@ -3,8 +3,9 @@ import '../styles/global.css';
 
 interface Props {
   title: string;
+  track?: 'windows' | 'linux' | undefined;
 }
-const { title } = Astro.props;
+const { title, track } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -13,28 +14,45 @@ const { title } = Astro.props;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <title>{title} - Taller Windows Server 2012 R2</title>
+  <title>{title} - Taller de Servidores</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-  <nav>
+<body data-track={track}>
+  <nav data-track={track}>
     <div class="nav-container">
       <a href="/" class="logo">
         <span class="logo-icon">⚙️</span>
-        <span class="logo-text">Taller Windows Server</span>
+        <span class="logo-text">Taller de Servidores</span>
       </a>
       <div class="nav-links">
-        <a href="/">Inicio</a>
-        <a href="/dns">DNS</a>
-        <a href="/dhcp">DHCP</a>
-        <a href="/ftp">FTP</a>
-        <a href="/smtp">SMTP</a>
-        <a href="/galeria">Galería</a>
-        <a href="/acercade" class="btn-nav">Acerca de</a>
+        {track === 'windows' && (
+          <>
+            <a href="/windows/dns">DNS</a>
+            <a href="/windows/dhcp">DHCP</a>
+            <a href="/windows/ftp">FTP</a>
+            <a href="/windows/smtp">SMTP</a>
+            <a href="/windows/galeria">Galería</a>
+            <a href="/windows/acercade" class="btn-nav">Acerca de</a>
+          </>
+        )}
+        {track === 'linux' && (
+          <>
+            <a href="/linux/dns">DNS</a>
+            <a href="/linux/dhcp">DHCP</a>
+            <a href="/linux/ftp">FTP</a>
+            <a href="/linux/smtp">SMTP</a>
+            <a href="/linux/http">HTTP</a>
+            <a href="/linux/galeria">Galería</a>
+            <a href="/linux/acercade" class="btn-nav">Acerca de</a>
+          </>
+        )}
+        {!track && (
+          <span class="track-hint">Selecciona un taller arriba</span>
+        )}
       </div>
     </div>
   </nav>
@@ -47,7 +65,7 @@ const { title } = Astro.props;
     <div class="footer-content">
       <div class="footer-brand">
         <span class="footer-icon">⚙️</span>
-        <span>Taller Windows Server 2012 R2</span>
+        <span>Taller de Servidores</span>
       </div>
       <p class="footer-subtitle">Instalación y Configuración de Servicios de Red</p>
       <p class="footer-copy">Proyecto académico</p>

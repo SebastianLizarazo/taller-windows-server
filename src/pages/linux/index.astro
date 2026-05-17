@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Linux Server" track="linux">
+  <h1>Taller Linux Server (Debian)</h1>
+
+  <p class="intro">
+    Este tutorial documenta paso a paso la instalación y configuración de un servidor
+    <strong>Linux Server con Debian 12</strong> implementando servicios de red equivalentes.
+  </p>
+
+  <h2>Servicios Implementados</h2>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <h3>🌐 DNS</h3>
+      <p>BIND9 - Servidor de nombres de dominio</p>
+    </div>
+    <div class="service-card">
+      <h3>📡 DHCP</h3>
+      <p>ISC DHCP - Asignación automática de IPs</p>
+    </div>
+    <div class="service-card">
+      <h3>📁 FTP</h3>
+      <p>vsftpd - Protocolo de transferencia archivos</p>
+    </div>
+    <div class="service-card">
+      <h3>✉️ SMTP</h3>
+      <p>Postfix - Servidor de correo electrónico</p>
+    </div>
+    <div class="service-card">
+      <h3>🌍 HTTP</h3>
+      <p>Apache2 - Servidor web</p>
+    </div>
+  </div>
+
+  <h2>Arquitectura de la Solución</h2>
+
+  <img
+    src="/images/linux/diagrama-red.png"
+    alt="Arquitectura de la red Linux"
+    class="diagram-image"
+    onerror="this.style.display='none'"
+  />
+
+  <h2>Datos del Servidor</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Dirección IP</td>
+      <td>192.168.3.1</td>
+    </tr>
+    <tr>
+      <td>Máscara de subred</td>
+      <td>255.255.255.0</td>
+    </tr>
+    <tr>
+      <td>Dominio DNS</td>
+      <td>sebastianlizarazo.com.co</td>
+    </tr>
+    <tr>
+      <td>Distribuidor</td>
+      <td>Debian Server 12</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/linux/dns" class="btn btn-primary">Comenzar con DNS →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .diagram-image {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+  }
+</style>

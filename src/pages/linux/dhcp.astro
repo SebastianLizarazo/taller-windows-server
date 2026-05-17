@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="DHCP - Linux Server" track="linux">
+  <h1>Configuración del Servidor DHCP (ISC)</h1>
+
+  <p class="intro">
+    El servidor DHCP (Dynamic Host Configuration Protocol) asigna automáticamente
+    direcciones IP a los clientes de la red. En Linux, utilizaremos <strong>ISC DHCP Server</strong>.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar ISC DHCP Server</h3>
+    <pre>apt update && apt install isc-dhcp-server</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Configurar el Archivo de DHCP</h3>
+    <p>Editar <code>/etc/dhcp/dhcpd.conf</code>:</p>
+    <pre># Configuración del servidor DHCP
+authoritative;
+default-lease-time 600;
+max-lease-time 7200;
+
+# Subred
+subnet 192.168.3.0 netmask 255.255.255.0 &#123;
+    range 192.168.3.100 192.168.3.254;
+    option routers 192.168.3.1;
+    option subnet-mask 255.255.255.0;
+    option domain-name-servers 192.168.3.1;
+    option domain-name "sebastianlizarazo.com.co";
+&#125;</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Configurar Interfaz de Red</h3>
+    <p>Especificar en cuál interfaz escuchará el servidor DHCP. Editar <code>/etc/default/isc-dhcp-server</code>:</p>
+    <pre>INTERFACES="enp0s3"</pre>
+    <p>Ajustar el nombre de la interfaz según corresponda (<code>eth0</code>, <code>ens33</code>, etc.).</p>
+  </div>
+
+  <div class="step">
+    <h3>Paso 4: Reiniciar el Servicio</h3>
+    <pre>systemctl restart isc-dhcp-server
+systemctl enable isc-dhcp-server</pre>
+  </div>
+
+  <h2>Verificación</h2>
+
+  <p>Desde el cliente Debian, verificar que recibe IP del DHCP:</p>
+
+  <pre>ip a</pre>
+
+  <p>El resultado debería mostrar una IP en el rango 192.168.3.100-254:</p>
+
+  <pre>inet 192.168.3.100/24 brd 192.168.3.255 scope global dynamic enp0s3</pre>
+
+  <p>También se puede verificar el lease actual:</p>
+
+  <pre>cat /var/lib/dhcp/dhclient.leases</pre>
+
+  <h2>Comandos Útiles</h2>
+
+  <table class="info-table">
+    <tr>
+      <td><code>systemctl status isc-dhcp-server</code></td>
+      <td>Ver estado del servicio</td>
+    </tr>
+    <tr>
+      <td><code>journalctl -u isc-dhcp-server</code></td>
+      <td>Ver logs del servicio</td>
+    </tr>
+    <tr>
+      <td><code>dhcpd -t</code></td>
+      <td>Verificar sintaxis del archivo de configuración</td>
+    </tr>
+    <tr>
+      <td><code>cat /var/lib/dhcp/dhcpd.leases</code></td>
+      <td>Ver leases asignados por el servidor</td>
+    </tr>
+  </table>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>UDP</td>
+    </tr>
+    <tr>
+      <td>Puerto servidor</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <td>Puerto cliente</td>
+      <td>68</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/linux/dns" class="btn">← Anterior: DNS</a>
+    <a href="/linux/ftp" class="btn btn-primary">Siguiente: FTP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

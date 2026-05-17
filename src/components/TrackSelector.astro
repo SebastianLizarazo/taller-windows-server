@@ -1,0 +1,111 @@
+---
+// TrackSelector - Two large buttons for server track selection
+---
+
+<div class="track-selector">
+  <a href="/windows/dns" class="track-button windows">
+    <span class="track-icon">🪟</span>
+    <span class="track-label">Windows Server</span>
+    <span class="track-desc">2012 R2 con Active Directory, IIS, DNS, DHCP</span>
+  </a>
+
+  <a href="/linux/dns" class="track-button linux">
+    <span class="track-icon">🐧</span>
+    <span class="track-label">Linux Server</span>
+    <span class="track-desc">Debian con BIND9, ISC DHCP, vsftpd, Postfix</span>
+  </a>
+</div>
+
+<style>
+  .track-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .track-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .track-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .track-button:hover::before {
+    opacity: 1;
+  }
+
+  .track-button.windows {
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    border-color: rgba(0, 168, 150, 0.3);
+  }
+
+  .track-button.windows::before {
+    background: linear-gradient(90deg, #00A896 0%, #02C39A 100%);
+  }
+
+  .track-button.windows:hover {
+    border-color: #00A896;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 168, 150, 0.3);
+  }
+
+  .track-button.linux {
+    background: linear-gradient(145deg, #1a2e1a 0%, #1a3d16 100%);
+    border-color: rgba(0, 255, 136, 0.3);
+  }
+
+  .track-button.linux::before {
+    background: linear-gradient(90deg, #00FF88 0%, #00CC6A 100%);
+  }
+
+  .track-button.linux:hover {
+    border-color: #00FF88;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 255, 136, 0.3);
+  }
+
+  .track-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .track-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+  }
+
+  .track-desc {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    text-align: center;
+  }
+
+  .windows:hover .track-desc {
+    color: #7FDBDA;
+  }
+
+  .linux:hover .track-desc {
+    color: #90EE90;
+  }
+</style>

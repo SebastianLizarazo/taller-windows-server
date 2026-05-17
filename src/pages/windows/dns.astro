@@ -1,13 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="DNS">
+<Layout title="DNS" track="windows">
   <h1>Configuración del Servidor DNS</h1>
 
   <p class="intro">
     El Servidor DNS (Domain Name System) traduce nombres de dominio a direcciones IP.
-    En nuestro caso, configuramos el dominio interno <code>lizarazo.com.co</code>.
+    En nuestro caso, configuramos el dominio interno <code>sebastianlizarazo.com.co</code>.
   </p>
 
   <h2>Pasos para la Instalación</h2>
@@ -30,7 +30,7 @@ import Layout from '../layouts/Layout.astro';
       <li>Click derecho en <strong>Zonas de búsqueda directa</strong></li>
       <li>Seleccionar <strong>Zona nueva</strong></li>
       <li>Elegir <strong>Zona principal</strong></li>
-      <li>Nombre de zona: <code>lizarazo.com.co</code></li>
+      <li>Nombre de zona: <code>sebastianlizarazo.com.co</code></li>
     </ol>
   </div>
 
@@ -38,14 +38,14 @@ import Layout from '../layouts/Layout.astro';
     <h3>Paso 3: Crear Registros A</h3>
     <p>Crear registros de tipo A para apuntar los subdominios a la IP del servidor:</p>
     <ul>
-      <li><strong>www.lizarazo.com.co</strong> → 192.168.3.1</li>
-      <li><strong>SERVIDOR-NS.lizarazo.com.co</strong> → 192.168.3.1</li>
+      <li><strong>www.sebastianlizarazo.com.co</strong> → 192.168.3.1</li>
+      <li><strong>SERVIDOR-NS.sebastianlizarazo.com.co</strong> → 192.168.3.1</li>
     </ul>
   </div>
 
   <h2>Comandos de Verificación</h2>
 
-  <pre>nslookup www.lizarazo.com.co</pre>
+  <pre>nslookup www.sebastianlizarazo.com.co</pre>
 
   <p>Desde el cliente Linux (Debian), ejecutamos el comando para verificar que el DNS resuelve correctamente:</p>
 
@@ -53,7 +53,7 @@ import Layout from '../layouts/Layout.astro';
 Server:     192.168.3.1
 Address:    192.168.3.1#53
 
-Name:       www.lizarazo.com.co
+Name:       www.sebastianlizarazo.com.co
 Address:    192.168.3.1
   </pre>
 
@@ -72,7 +72,7 @@ Address:    192.168.3.1
 
   <div class="nav-buttons">
     <a href="/" class="btn">← Volver a Inicio</a>
-    <a href="/dhcp" class="btn btn-primary">Siguiente: DHCP →</a>
+    <a href="/windows/dhcp" class="btn btn-primary">Siguiente: DHCP →</a>
   </div>
 </Layout>
 

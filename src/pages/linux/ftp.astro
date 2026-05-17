@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="FTP - Linux Server" track="linux">
+  <h1>Configuración del Servidor FTP (vsftpd)</h1>
+
+  <p class="intro">
+    El protocolo FTP (File Transfer Protocol) permite la transferencia de archivos
+    entre el servidor y los clientes con autenticación de usuarios. En Linux,
+    utilizaremos <strong>vsftpd</strong> (Very Secure FTP Daemon).
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar vsftpd</h3>
+    <pre>apt update && apt install vsftpd</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Crear Usuarios</h3>
+    <p>Crear los usuarios para autenticación FTP:</p>
+    <pre>useradd -m sebastian
+useradd -m david
+passwd sebastian
+passwd david</pre>
+    <p>Ingresar las contraseñas cuando se solicite.</p>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Configurar vsftpd</h3>
+    <p>Editar <code>/etc/vsftpd.conf</code>:</p>
+    <pre># Configuración de vsftpd
+listen=YES
+local_enable=YES
+write_enable=YES
+local_umask=022
+chroot_local_user=YES
+allow_writeable_chroot=YES
+pasv_enable=YES
+pasv_min_port=4000
+pasv_max_port=4010
+userlist_enable=YES
+userlist_file=/etc/vsftpd.userlist
+userlist_deny=NO</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 4: Agregar Usuarios a la Lista</h3>
+    <pre>echo "sebastian" | tee -a /etc/vsftpd.userlist
+echo "david" | tee -a /etc/vsftpd.userlist</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 5: Reiniciar el Servicio</h3>
+    <pre>systemctl restart vsftpd
+systemctl enable vsftpd</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 6: Configurar Firewall</h3>
+    <pre>ufw allow 20/tcp
+ufw allow 21/tcp
+ufw allow 4000:4010/tcp</pre>
+  </div>
+
+  <h2>Conexión desde Cliente Linux</h2>
+
+  <p>Desde la terminal del cliente Debian:</p>
+
+  <pre>ftp 192.168.3.1
+Connected to 192.168.3.1
+220 (vsFTPd 3.0.3)
+Name (192.168.3.1:debian): sebastian
+331 Please specify the password.
+Password:
+230 Login successful.
+ftp></pre>
+
+  <h2>Comandos FTP Útiles</h2>
+
+  <table class="info-table">
+    <tr>
+      <td><code>ls</code></td>
+      <td>Listar archivos</td>
+    </tr>
+    <tr>
+      <td><code>get archivo.txt</code></td>
+      <td>Descargar archivo</td>
+    </tr>
+    <tr>
+      <td><code>put archivo.txt</code></td>
+      <td>Subir archivo</td>
+    </tr>
+    <tr>
+      <td><code>quit</code></td>
+      <td>Salir</td>
+    </tr>
+  </table>
+
+  <h2>Verificación</h2>
+
+  <pre>ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-rw-r--r--    1 sebastian sebastian    0 May 17 10:00 archivo.txt
+226 Directory send OK.
+
+ftp> get archivo.txt
+local: archivo.txt remote: archivo.txt
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for archivo.txt (0 bytes).
+226 Transfer complete.</pre>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Puerto de control</td>
+      <td>TCP 21</td>
+    </tr>
+    <tr>
+      <td>Puerto de datos (pasivo)</td>
+      <td>TCP 4000-4010</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/linux/dhcp" class="btn">← Anterior: DHCP</a>
+    <a href="/linux/smtp" class="btn btn-primary">Siguiente: SMTP →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

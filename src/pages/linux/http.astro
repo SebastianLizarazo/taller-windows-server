@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="HTTP - Linux Server" track="linux">
+  <h1>Configuración del Servidor HTTP (Apache2)</h1>
+
+  <p class="intro">
+    El servidor web Apache2 permite publicar contenido HTML. En Linux, es el equivalente
+    a IIS en Windows Server. Configuraremos un virtual host para servir la página del tutorial.
+  </p>
+
+  <h2>Pasos para la Instalación</h2>
+
+  <div class="step">
+    <h3>Paso 1: Instalar Apache2</h3>
+    <pre>apt update && apt install apache2</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 2: Crear Directorio del Sitio</h3>
+    <pre>mkdir -p /var/www/tutorial
+chown -R www-data:www-data /var/www/tutorial</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 3: Crear Página de Prueba</h3>
+    <p>Crear <code>/var/www/tutorial/index.html</code>:</p>
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Tutorial Linux Server&lt;/title&gt;
+    &lt;style&gt;
+        body &#123; font-family: Arial, sans-serif; margin: 40px; &#125;
+        h1 &#123; color: #00A896; &#125;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Bienvenido al Taller Linux Server&lt;/h1&gt;
+    &lt;p&gt;Servidor configurado exitosamente en Debian 12&lt;/p&gt;
+    &lt;p&gt;IP: 192.168.3.1&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 4: Crear Virtual Host</h3>
+    <p>Crear <code>/etc/apache2/sites-available/tutorial.conf</code>:</p>
+    <pre>&lt;VirtualHost *:80&gt;
+    ServerName www.sebastianlizarazo.com.co
+    ServerAlias sebastianlizarazo.com.co
+    DocumentRoot /var/www/tutorial
+
+    &lt;Directory /var/www/tutorial&gt;
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+
+    ErrorLog &#36;&#123;APACHE_LOG_DIR&#125;/tutorial-error.log
+    CustomLog &#36;&#123;APACHE_LOG_DIR&#125;/tutorial-access.log combined
+&lt;/VirtualHost&gt;</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 5: Habilitar el Sitio</h3>
+    <pre>a2ensite tutorial.conf
+a2enmod rewrite
+systemctl restart apache2
+systemctl enable apache2</pre>
+  </div>
+
+  <div class="step">
+    <h3>Paso 6: Configurar Firewall</h3>
+    <pre>ufw allow 80/tcp
+ufw allow 443/tcp</pre>
+  </div>
+
+  <h2>Verificación</h2>
+
+  <p>Desde el navegador del cliente Debian:</p>
+  <pre>http://www.sebastianlizarazo.com.co</pre>
+  <p>ó</p>
+  <pre>http://192.168.3.1</pre>
+
+  <p>Se debería ver la página de prueba.</p>
+
+  <h2>Comandos Útiles</h2>
+
+  <table class="info-table">
+    <tr>
+      <td><code>systemctl status apache2</code></td>
+      <td>Ver estado del servicio</td>
+    </tr>
+    <tr>
+      <td><code>a2dissite tutorial.conf</code></td>
+      <td>Deshabilitar sitio</td>
+    </tr>
+    <tr>
+      <td><code>a2ensite tutorial.conf</code></td>
+      <td>Habilitar sitio</td>
+    </tr>
+    <tr>
+      <td><code>apachectl -t</code></td>
+      <td>Verificar sintaxis de configuración</td>
+    </tr>
+  </table>
+
+  <h2>Rutas de Archivos</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Directorio web</td>
+      <td><code>/var/www/tutorial/</code></td>
+    </tr>
+    <tr>
+      <td>Configuración sitio</td>
+      <td><code>/etc/apache2/sites-available/tutorial.conf</code></td>
+    </tr>
+    <tr>
+      <td>Logs de error</td>
+      <td><code>/var/log/apache2/error.log</code></td>
+    </tr>
+    <tr>
+      <td>Logs de acceso</td>
+      <td><code>/var/log/apache2/access.log</code></td>
+    </tr>
+  </table>
+
+  <h2>Puertos Utilizados</h2>
+
+  <table class="info-table">
+    <tr>
+      <td>Protocolo</td>
+      <td>TCP</td>
+    </tr>
+    <tr>
+      <td>Puerto HTTP</td>
+      <td>80</td>
+    </tr>
+    <tr>
+      <td>Puerto HTTPS</td>
+      <td>443</td>
+    </tr>
+  </table>
+
+  <div class="nav-buttons">
+    <a href="/linux/smtp" class="btn">← Anterior: SMTP</a>
+    <a href="/linux/galeria" class="btn btn-primary">Siguiente: Galería →</a>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+</style>

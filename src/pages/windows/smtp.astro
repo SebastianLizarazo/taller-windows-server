@@ -1,13 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="SMTP">
+<Layout title="SMTP" track="windows">
   <h1>Configuración del Servidor SMTP</h1>
 
   <p class="intro">
     El servidor SMTP (Simple Mail Transfer Protocol) permite el envío y recepción
-    de correos electrónicos dentro del dominio local <code>lizarazo.com.co</code>.
+    de correos electrónicos dentro del dominio local <code>sebastiansebastianlizarazo.com.co</code>.
   </p>
 
   <h2>Pasos para la Instalación</h2>
@@ -28,7 +28,7 @@ import Layout from '../layouts/Layout.astro';
       <li>Abrir <strong>Herramientas → Administración de IIS 6.0</strong></li>
       <li>Click derecho en <strong>Dominios</strong> → <strong>Nuevo → Dominio</strong></li>
       <li>Tipo: <strong>Alias de dominio local</strong></li>
-      <li>Nombre: <code>lizarazo.com.co</code></li>
+      <li>Nombre: <code>sebastianlizarazo.com.co</code></li>
     </ol>
   </div>
 
@@ -46,8 +46,8 @@ import Layout from '../layouts/Layout.astro';
 
   <p>El correo se almacena en la carpeta <code>C:\inetpub\mailroot\mailbox</code>:</p>
 
-  <pre>New-Item -Path "C:\inetpub\mailroot\mailbox\lizarazo.com.co\sebastian" -ItemType Directory
-New-Item -Path "C:\inetpub\mailroot\mailbox\lizarazo.com.co\david" -ItemType Directory</pre>
+  <pre>New-Item -Path "C:\inetpub\mailroot\mailbox\sebastianlizarazo.com.co\sebastian" -ItemType Directory
+New-Item -Path "C:\inetpub\mailroot\mailbox\sebastianlizarazo.com.co\david" -ItemType Directory</pre>
 
   <h2>Envío de Correo mediante Telnet</h2>
 
@@ -58,12 +58,12 @@ New-Item -Path "C:\inetpub\mailroot\mailbox\lizarazo.com.co\david" -ItemType Dir
   <p>Secuencia de comandos SMTP:</p>
 
   <pre>
-HELO lizarazo.com.co
+HELO sebastianlizarazo.com.co
 250 Hello [192.168.3.100]
-MAIL FROM:sebastian@lizarazo.com.co
-250 2.1.0 sebastian@lizarazo.com.co....Sender OK
-RCPT TO:david@lizarazo.com.co
-250 2.1.5 david@lizarazo.com.co
+MAIL FROM:sebastian@sebastianlizarazo.com.co
+250 2.1.0 sebastian@sebastianlizarazo.com.co....Sender OK
+RCPT TO:david@sebastianlizarazo.com.co
+250 2.1.5 david@sebastianlizarazo.com.co
 DATA
 354 Start mail input; end with CRLF.CRLF
 Subject: Prueba de correo
@@ -80,11 +80,11 @@ QUIT
   <table class="info-table">
     <tr>
       <td>Usuario 1</td>
-      <td>sebastian@lizarazo.com.co</td>
+      <td>sebastian@sebastianlizarazo.com.co</td>
     </tr>
     <tr>
       <td>Usuario 2</td>
-      <td>david@lizarazo.com.co</td>
+      <td>david@sebastianlizarazo.com.co</td>
     </tr>
   </table>
 
@@ -102,8 +102,8 @@ QUIT
   </table>
 
   <div class="nav-buttons">
-    <a href="/ftp" class="btn">← Anterior: FTP</a>
-    <a href="/acercade" class="btn btn-primary">Siguiente: Acerca de →</a>
+    <a href="/windows/ftp" class="btn">← Anterior: FTP</a>
+    <a href="/windows/galeria" class="btn btn-primary">Siguiente: Galería →</a>
   </div>
 </Layout>
 

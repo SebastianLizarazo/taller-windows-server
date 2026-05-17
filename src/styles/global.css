@@ -205,6 +205,12 @@ nav {
   box-shadow: 0 4px 15px rgba(0, 168, 150, 0.4);
 }
 
+.track-hint {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 /* ========================================
    MAIN CONTENT
    ======================================== */

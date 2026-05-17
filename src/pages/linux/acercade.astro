@@ -1,0 +1,248 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Acerca de - Linux Server" track="linux">
+  <h1>Acerca de</h1>
+
+  <div class="about-container">
+    <div class="profile-section">
+      <div class="profile-image">
+        <img src="/images/perfil.png" alt="Foto de perfil" onerror="this.parentElement.innerHTML='<div class=\\'placeholder-image\\'>👤</div>'" />
+      </div>
+
+      <h2>Sebastián Lizarazo</h2>
+
+      <p>
+        Este tutorial fue desarrollado como parte del taller de instalación y configuración
+        de <strong>Linux Server (Debian 12)</strong>, donde se implementaron servicios de red
+        equivalentes a los del taller de Windows Server 2012 R2, incluyendo DNS, DHCP, FTP,
+        SMTP y HTTP.
+      </p>
+
+      <p>
+        El objetivo de este proyecto es documentar paso a paso el proceso de configuración
+        de un servidor Linux de red completo, desde la instalación hasta la puesta en marcha
+        de cada servicio, utilizando software libre y estándar de la industria.
+      </p>
+    </div>
+
+    <div class="contact-section">
+      <h3>Información de Contacto</h3>
+
+      <div class="contact-item">
+        <span><strong>Correo de contacto:</strong></span>
+        <span>seblizarazo@gmail.com</span>
+      </div>
+
+      <div class="contact-item">
+        <span><strong>Perfil de GitHub:</strong></span>
+        <a href="https://github.com/SebastianLizarazo" target="_blank" rel="noopener noreferrer">SebastianLizarazo</a>
+      </div>
+    </div>
+
+    <div class="services-summary">
+      <h3>Tecnologías Linux Utilizadas</h3>
+
+      <div class="service-list">
+        <div class="service-item">
+          <span class="service-icon">🌐</span>
+          <div>
+            <strong>BIND9</strong>
+            <p>Servidor DNS</p>
+          </div>
+        </div>
+
+        <div class="service-item">
+          <span class="service-icon">📡</span>
+          <div>
+            <strong>ISC DHCP Server</strong>
+            <p>Servidor DHCP</p>
+          </div>
+        </div>
+
+        <div class="service-item">
+          <span class="service-icon">📁</span>
+          <div>
+            <strong>vsftpd</strong>
+            <p>Servidor FTP</p>
+          </div>
+        </div>
+
+        <div class="service-item">
+          <span class="service-icon">✉️</span>
+          <div>
+            <strong>Postfix</strong>
+            <p>Servidor de correo SMTP</p>
+          </div>
+        </div>
+
+        <div class="service-item">
+          <span class="service-icon">🌍</span>
+          <div>
+            <strong>Apache2</strong>
+            <p>Servidor web HTTP</p>
+          </div>
+        </div>
+
+        <div class="service-item">
+          <span class="service-icon">🐧</span>
+          <div>
+            <strong>Debian 12</strong>
+            <p>Sistema operativo del servidor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tech-stack">
+      <h3>Infraestructura</h3>
+
+      <div class="tech-tags">
+        <span class="tag">Debian Server 12</span>
+        <span class="tag">VirtualBox</span>
+        <span class="tag">BIND9</span>
+        <span class="tag">ISC DHCP</span>
+        <span class="tag">vsftpd</span>
+        <span class="tag">Postfix</span>
+        <span class="tag">Apache2</span>
+        <span class="tag">Thunderbird</span>
+        <span class="tag">Astro</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="/linux/galeria" class="btn">← Anterior: Galería</a>
+    <a href="/" class="btn">Volver a Inicio</a>
+  </div>
+</Layout>
+
+<style>
+  .about-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .profile-section {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    border: 3px solid #00FF88;
+  }
+
+  .profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-section h2 {
+    color: var(--text-primary);
+    border: none;
+    margin-top: 0;
+  }
+
+  .profile-section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #00FF88 0%, #00CC6A 100%);
+    margin: 0.5rem auto;
+  }
+
+  .contact-section {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+  }
+
+  .contact-section h3 {
+    margin-top: 0;
+    color: #00FF88;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .contact-item a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .contact-item a:hover {
+    color: #00FF88;
+  }
+
+  .service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .service-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+  }
+
+  .service-item:hover {
+    border-color: #00FF88;
+    transform: translateX(5px);
+  }
+
+  .service-icon {
+    font-size: 1.5rem;
+  }
+
+  .service-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .tech-stack {
+    margin-bottom: 2rem;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background: linear-gradient(135deg, #00FF88 0%, #00CC6A 100%);
+    color: #03363D;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+</style>
