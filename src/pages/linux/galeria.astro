@@ -1,78 +1,110 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+const sections = [
+  {
+    id: "dns",
+    title: "Configuración DNS (BIND9)",
+    icon: "🌐",
+    items: [
+      {image: "/images/linux/dns/configuracion-servidor-bind9-dns-pt1.png", caption: "Configuración del servidor BIND9 DNS - Parte 1" },
+      {image: "/images/linux/dns/configuracion-servidor-bind9-dns-pt2.png", caption: "Configuración del servidor BIND9 DNS - Parte 2" },
+      {image: "/images/linux/dns/verificacion-servidor-bind9-dns.png", caption: "Verificación del servidor BIND9 DNS" },
+    ]
+  },
+  {
+    id: "dhcp",
+    title: "Configuración DHCP (ISC)",
+    icon: "📡",
+    items: [
+      {image: "/images/linux/dhcp/instalacion-servicios-servidor-pt1.png", caption: "Instalación de servicios en el servidor - Parte 1" },
+      {image: "/images/linux/dhcp/instalacion-servicios-servidor-pt2-mail-server-configuration-internet-site.png", caption: "Instalación de servicios - Configuración de correo (Internet Site)" },
+      {image: "/images/linux/dhcp/instalacion-servicios-servidor-pt3-mail-server-configuration-mail-name.png", caption: "Instalación de servicios - Nombre del dominio de correo" },
+      {image: "/images/linux/dhcp/configuracion-ip-estatica-en-servidor.png", caption: "Configuración de IP estática en el servidor" },
+      {image: "/images/linux/dhcp/verificacion-ip-estatica-en-servidor.png", caption: "Verificación de IP estática en el servidor" },
+      {image: "/images/linux/dhcp/configuracion-servidor-dhcp-pt1.png", caption: "Configuración del servidor DHCP - Parte 1" },
+      {image: "/images/linux/dhcp/configuracion-servidor-dhcp-pt2.png", caption: "Configuración del servidor DHCP - Parte 2" },
+      {image: "/images/linux/dhcp/verificacion-servidor-dhcp.png", caption: "Verificación del servidor DHCP" },
+    ]
+  },
+  {
+    id: "ftp",
+    title: "Configuración FTP (vsftpd)",
+    icon: "📁",
+    items: [
+      {image: "/images/linux/ftp/configuracion-servidor-ftp-pt1.png", caption: "Configuración del servidor FTP - Parte 1" },
+      {image: "/images/linux/ftp/configuracion-servidor-ftp-pt2-creacion-usuarios.png", caption: "Configuración del servidor FTP - Creación de usuarios" },
+      {image: "/images/linux/ftp/configuracion-servidor-ftp-pt3-anadir-usuarios-ftplist.png", caption: "Configuración del servidor FTP - Agregar usuarios a la lista FTP" },
+      {image: "/images/linux/ftp/verificacion-servidor-ftp.png", caption: "Verificación del servidor FTP" },
+    ]
+  },
+  {
+    id: "smtp",
+    title: "Configuración SMTP (Postfix + Thunderbird)",
+    icon: "✉️",
+    items: [
+      {image: "/images/linux/smtp/configuracion-servidor-buzones-correos.png", caption: "Configuración de buzones de correo en el servidor" },
+      {image: "/images/linux/smtp/creacion-cliente-sebastian-smtp-thunderbird-pt1.png", caption: "Creación de cuenta sebastian en Thunderbird - Parte 1" },
+      {image: "/images/linux/smtp/creacion-cliente-sebastian-smtp-thunderbird-pt2.png", caption: "Creación de cuenta sebastian en Thunderbird - Parte 2" },
+      {image: "/images/linux/smtp/creacion-cliente-david-smtp-thunderbird-pt1.png", caption: "Creación de cuenta david en Thunderbird - Parte 1" },
+      {image: "/images/linux/smtp/creacion-cliente-david-smtp-thunderbird-pt2.png", caption: "Creación de cuenta david en Thunderbird - Parte 2" },
+    ]
+  },
+  {
+    id: "http",
+    title: "Configuración HTTP (Apache2)",
+    icon: "🌍",
+    items: [
+      {image: "/images/linux/http/configuracion-servidor-http-pt1.png", caption: "Configuración del servidor HTTP Apache2 - Parte 1" },
+      {image: "/images/linux/http/configuracion-servidor-http-pt2-verificacion-puerto-80.png", caption: "Verificación del servidor HTTP - Puerto 80" },
+      {image: "/images/linux/http/configuracion-servidor-http-pt3-configuracion-correos-locales.png", caption: "Configuración de correos locales" },
+    ]
+  }
+];
 ---
 
-<Layout title="Galería - Linux Server" track="linux">
+<Layout title="Galería de Evidencias - Linux Server" track="linux">
   <h1>Galería de Evidencias - Linux Server</h1>
 
   <p class="intro">
-    Esta galería muestra las capturas de pantalla del proceso de instalación y configuración
-    del servidor Linux (Debian 12) con los servicios de red.
+    Documentación visual del proceso de instalación y configuración del servidor
+    Linux (Debian 12) con los servicios de red BIND9, ISC DHCP, vsftpd, Postfix y Apache2.
   </p>
 
-  <div class="gallery-note">
-    <p>📸 Las capturas de pantalla se irán agregando a medida que se realice el taller.</p>
-  </div>
-
-  <h2>Estructura de Secciones</h2>
-
   <div class="gallery-sections">
-    <div class="section-card">
-      <h3>🌐 DNS (BIND9)</h3>
-      <p>Capturas de la instalación y configuración de BIND9</p>
-      <div class="preview-placeholder">Imágenes: public/images/linux/dns/</div>
-    </div>
+    {sections.map((section) => (
+      <div class="gallery-section" id={section.id}>
+        <button class="section-toggle" type="button">
+          <span class="section-icon">{section.icon}</span>
+          <span class="section-title">{section.title}</span>
+          <span class="section-count">{section.items.length} imágenes</span>
+          <span class="toggle-arrow">▼</span>
+        </button>
 
-    <div class="section-card">
-      <h3>📡 DHCP (ISC)</h3>
-      <p>Capturas de la configuración del servidor DHCP</p>
-      <div class="preview-placeholder">Imágenes: public/images/linux/dhcp/</div>
-    </div>
+        <div class="section-content">
+          <div class="images-grid">
+            {section.items.map((item, index) => (
+              <div class="image-card" data-section={section.id} data-index={index}>
+                <button class="image-button" type="button" data-caption={item.caption}>
+                  <div class="image-wrapper">
+                    <img 
+                      src={item.image} 
+                      alt={item.caption || `${section.title} - Imagen ${index + 1}`}
+                      onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📷<span>Imagen no encontrada</span></div>'"
+                    />
+                  </div>
+                  <p class="image-caption">{item.caption || `${section.title} - Imagen ${index + 1}`}</p>
+                </button>
+              </div>
+            ))}
+          </div>
 
-    <div class="section-card">
-      <h3>📁 FTP (vsftpd)</h3>
-      <p>Capturas de la configuración y prueba del FTP</p>
-      <div class="preview-placeholder">Imágenes: public/images/linux/ftp/</div>
-    </div>
-
-    <div class="section-card">
-      <h3>✉️ SMTP (Postfix)</h3>
-      <p>Capturas del servidor de correo y Thunderbird</p>
-      <div class="preview-placeholder">Imágenes: public/images/linux/smtp/</div>
-    </div>
-
-    <div class="section-card">
-      <h3>🌍 HTTP (Apache2)</h3>
-      <p>Capturas del servidor web Apache2</p>
-      <div class="preview-placeholder">Imágenes: public/images/linux/http/</div>
-    </div>
-
-    <div class="section-card">
-      <h3>🖥️ Infraestructura</h3>
-      <p>Capturas de la configuración de VirtualBox y VMs</p>
-      <div class="preview-placeholder">Imágenes: public/images/linux/galeria/</div>
-    </div>
-  </div>
-
-  <h2>Agregar Imágenes</h2>
-
-  <div class="step">
-    <h3>Instrucciones para agregar capturas</h3>
-    <ol>
-      <li>Guardar las capturas en formato PNG o JPG</li>
-      <li>Copiar las imágenes a la carpeta correspondiente:
-        <ul>
-          <li><code>public/images/linux/dns/</code></li>
-          <li><code>public/images/linux/dhcp/</code></li>
-          <li><code>public/images/linux/ftp/</code></li>
-          <li><code>public/images/linux/smtp/</code></li>
-          <li><code>public/images/linux/http/</code></li>
-          <li><code>public/images/linux/galeria/</code></li>
-        </ul>
-      </li>
-      <li>Nombrar las imágenes descriptivamente (ej: <code>01-instalacion-bind9.png</code>)</li>
-      <li>La galería se actualiza automáticamente</li>
-    </ol>
+          {section.items.length === 0 && (
+            <p class="empty-message">📷 No hay imágenes disponibles para esta sección aún.</p>
+          )}
+        </div>
+      </div>
+    ))}
   </div>
 
   <div class="nav-buttons">
@@ -81,50 +113,411 @@ import Layout from '../../layouts/Layout.astro';
   </div>
 </Layout>
 
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox">
+  <button class="lightbox-close" type="button">✕</button>
+  <button class="lightbox-nav lightbox-prev" type="button">‹</button>
+  <button class="lightbox-nav lightbox-next" type="button">›</button>
+  <div class="lightbox-content">
+    <img id="lightbox-image" src="" alt="" />
+    <p id="lightbox-caption"></p>
+  </div>
+  <div class="lightbox-counter">
+    <span id="lightbox-current">1</span> / <span id="lightbox-total">1</span>
+  </div>
+</div>
+
 <style>
   .intro {
     color: var(--text-secondary);
     margin-bottom: 2rem;
-  }
-
-  .gallery-note {
-    background: rgba(0, 168, 150, 0.1);
-    border-left: 3px solid #00A896;
-    padding: 1rem;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 2rem;
+    font-size: 1.05rem;
   }
 
   .gallery-sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
-    margin: 2rem 0;
   }
 
-  .section-card {
-    background: var(--bg-card);
+  .gallery-section {
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
   }
 
-  .section-card h3 {
-    margin-top: 0;
-    color: var(--accent-secondary);
+  .section-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: left;
   }
 
-  .section-card p {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+  .section-toggle:hover {
+    background: rgba(0, 255, 136, 0.1);
   }
 
-  .preview-placeholder {
-    background: var(--bg-primary);
-    padding: 0.75rem;
-    border-radius: 4px;
-    font-family: var(--font-mono);
+  .section-icon {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    flex: 1;
+  }
+
+  .section-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .toggle-arrow {
     font-size: 0.8rem;
     color: var(--text-muted);
+    transition: transform 0.3s ease;
+  }
+
+  .section-toggle.active .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  .section-content {
+    display: none;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .section-content.open {
+    display: block;
+  }
+
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .image-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .image-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .image-button {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+    text-align: left;
+    display: block;
+  }
+
+  .image-wrapper {
+    aspect-ratio: 16 / 9;
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .image-card:hover .image-wrapper img {
+    transform: scale(1.05);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 2rem;
+  }
+
+  .image-placeholder span {
+    font-size: 0.85rem;
+  }
+
+  .image-caption {
+    padding: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    line-height: 1.5;
+  }
+
+  .empty-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: 8px;
+  }
+
+  /* ================================================
+     LIGHTBOX STYLES
+     ================================================ */
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-close:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-nav:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .lightbox-prev {
+    left: 1.5rem;
+  }
+
+  .lightbox-next {
+    right: 1.5rem;
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #lightbox-image {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+  }
+
+  #lightbox-caption {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .images-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-toggle {
+      flex-wrap: wrap;
+    }
+
+    .section-count {
+      width: 100%;
+      order: 3;
+      margin-top: 0.5rem;
+    }
+
+    .lightbox-nav {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+
+    .lightbox-prev {
+      left: 0.5rem;
+    }
+
+    .lightbox-next {
+      right: 0.5rem;
+    }
+
+    .lightbox-close {
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+    }
   }
 </style>
+
+<script>
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCurrent = document.getElementById('lightbox-current');
+  const lightboxTotal = document.getElementById('lightbox-total');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+  let currentImages: { image: string; caption: string }[] = [];
+
+  // Open lightbox
+  document.querySelectorAll('.image-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLElement;
+      const card = target.closest('.image-card') as HTMLElement;
+      const sectionId = card.getAttribute('data-section') || '';
+      const index = parseInt(card.getAttribute('data-index') || '0');
+      
+      const section = document.getElementById(sectionId);
+      const items = section?.querySelectorAll('.image-card') || [];
+      
+      currentImages = Array.from(items).map(item => {
+        const img = item.querySelector('img');
+        const caption = item.querySelector('.image-caption');
+        return {
+          image: img?.src || '',
+          caption: caption?.textContent || ''
+        };
+      });
+      
+      currentIndex = index;
+      showImage();
+      lightbox?.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close lightbox
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Navigation
+  prevBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    showImage();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    showImage();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') (prevBtn as HTMLElement)?.click();
+    if (e.key === 'ArrowRight') (nextBtn as HTMLElement)?.click();
+  });
+
+  function showImage() {
+    if (!lightboxImage || !lightboxCaption || !lightboxCurrent || !lightboxTotal) return;
+    
+    const item = currentImages[currentIndex];
+    lightboxImage.src = item.image;
+    lightboxImage.alt = item.caption;
+    lightboxCaption.textContent = item.caption;
+    lightboxCurrent.textContent = (currentIndex + 1).toString();
+    lightboxTotal.textContent = currentImages.length.toString();
+  }
+
+  function closeLightbox() {
+    lightbox?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Section toggle accordion
+  document.querySelectorAll('.section-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      button.classList.toggle('active');
+      const content = button.nextElementSibling;
+      if (content) {
+        content.classList.toggle('open');
+      }
+    });
+  });
+</script>
